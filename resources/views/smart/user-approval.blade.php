@@ -34,7 +34,7 @@
                         @foreach($users as $user)
                         <tr class="hover:bg-gray-50 border-b">
                             <td class="px-5 py-2 border-r whitespace-nowrap">
-                                {{ $user->id }}
+                                {{ $loop->iteration }}
                             </td>
                             <td class="px-5 py-2 border-r whitespace-nowrap">
                                 {{ $user->name }}
@@ -128,7 +128,6 @@
 
         $(document).ready(function() {
             
-        
             //承認処理ボタンクリックイベント
             $('.approveBtn').on('click', function() {
                 var userId = $(this).data('id');

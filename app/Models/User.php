@@ -77,7 +77,7 @@ class User extends Authenticatable
     ];
 
     public function wardManager() {
-        return $this->hasOne(WardManager::class, 'id', 'id');
+        return $this->hasMany(WardManager::class, 'id', 'id');
     }
 
     public function isOnline()

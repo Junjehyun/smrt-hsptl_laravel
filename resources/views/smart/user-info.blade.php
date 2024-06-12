@@ -46,7 +46,7 @@
                                     {{ $user->email}}
                                 </td>
                                 <td class="px-5 py-2 border-r whitespace-nowrap">
-                                    {{ $user->department}}
+                                    {{ $user->department }}
                                 </td>
                                 <td class="px-5 py-2 border-r whitespace-nowrap">
                                     @isset($userTypes[$user->user_type])

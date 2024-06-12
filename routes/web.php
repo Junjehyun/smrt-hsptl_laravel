@@ -73,3 +73,6 @@ Route::post('/user-approval-registration/{id}', [UserController::class, 'userApp
 
 Route::get('/ward-manager', [UserController::class, 'wardManager'])->name('ward-manager');
 Route::get('/revoke-permission/{id}', [UserController::class, 'revokePermission'])->name('revoke-permission');
+
+//病棟管理者画面
+Route::post('/ward-update/{id}', [UserController::class, 'updateWard'])->name('ward-update');

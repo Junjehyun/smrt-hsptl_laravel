@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Consts\ControllerConsts;
 use App\Models\User;
+use App\Models\WardManager;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -108,7 +110,16 @@ class UserController extends Controller
         return response()->json(['error' => '承認できませんでした'], 404);
     }
     public function wardManager() {
-        return view('smart.ward-manager');
+
+        $users = User::with('wardManager')
+        ->where('user_type', '005')
+        ->orderBy('id', 'desc')
+        ->paginate(ControllerConsts::PAGINATION_COUNT);
+
+        return view('smart.ward-manager', compact('users'));
     }
-    
+
+    public function updateWard() {
+        
+    }
 }

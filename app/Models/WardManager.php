@@ -21,4 +21,7 @@ class WardManager extends Model
         return $this->belongsTo(User::class, 'id', 'id');
     }
 
+    public $incrementing = true;
+    protected $keyType = 'int';
+
 }
