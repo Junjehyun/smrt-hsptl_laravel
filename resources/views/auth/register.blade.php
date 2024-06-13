@@ -12,7 +12,7 @@
             @csrf
 
             <div class="mt-4">
-                <x-label for="department" value="Department" />
+                <x-label for="department" value="部署" />
                 <select id="department" name="department" class="block mt-1 w-full">
                     <option value="">※選択して下さい。</option>
                     @foreach($departments as $item_name)
@@ -22,9 +22,8 @@
             </div>
 
             <div class="mt-4">
-                <x-label for="ward" value="Ward" />
-                <select id="ward" name="ward" class="block mt-1 w-full">
-                    <option value="">※選択して下さい。</option>
+                <x-label for="ward" value="病棟" />
+                <select id="ward" name="ward[]" class="block mt-1 w-full" multiple>
                     @foreach($wards as $ward_code)
                         <option value="{{ $ward_code }}">{{ $ward_code }}</option>
                     @endforeach

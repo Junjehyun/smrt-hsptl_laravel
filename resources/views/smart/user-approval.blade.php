@@ -46,7 +46,10 @@
                                 {{ $user->department }}
                             </td>
                             <td class="px-5 py-2 border-r whitespace-nowrap">
-                                {{ $user->wardManager->ward_code ?? ''}}
+                                {{-- {{ $user->wardManager->ward_code ?? ''}} --}}
+                                @foreach($user->wardManager as $ward)
+                                        {{ $ward->ward_code }}<br>
+                                @endforeach
                             </td>
                             <td class="px-5 py-2 border-r whitespace-nowrap">
                                 @isset($userTypes[$user->user_type])

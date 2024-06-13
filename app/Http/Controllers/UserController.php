@@ -76,6 +76,14 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'ユーザーの権限が削除されました');
     }
 
+    /**
+     * ユーザー承認画面
+     * 
+     * @return \Illuminate\View\View
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     public function userApproval() {
         
         $users = User::with('wardManager')
@@ -88,6 +96,14 @@ class UserController extends Controller
         return view('smart.user-approval', compact('users', 'userTypes'));
     }
 
+    /**
+     * ユーザー承認
+     * 
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
     public function userApprovalRegistration(Request $request, $id) {
         $user = User::find($id);
 
@@ -109,6 +125,12 @@ class UserController extends Controller
         }
         return response()->json(['error' => '承認できませんでした'], 404);
     }
+
+    /**
+     * 病棟管理者画面
+     * 
+     * @return \Illuminate\View\View
+     */
     public function wardManager() {
 
         $users = User::with('wardManager')
@@ -119,7 +141,41 @@ class UserController extends Controller
         return view('smart.ward-manager', compact('users'));
     }
 
-    public function updateWard() {
-        
+    /**
+     * 病棟更新
+     * 
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function updateWard(Request $request, $id) {
+
+        try {
+            Log::info('updateWard called', ['user_id' => $id, 'ward_codes' => $request->input('ward_codes', [])]);
+            $wardCodes = $request->input('ward_codes', []);
+
+            WardManager::where('user_id', $id)
+                ->whereNotIn('ward_code', $wardCodes)
+                ->delete();
+
+            foreach ($wardCodes as $wardCode) {
+                WardManager::updateOrCreate(
+                    ['user_id' => $id, 'ward_code' => $wardCode],
+                    ['user_id' => $id, 'ward_code' => $wardCode,
+                    'creator_id' => auth()->id()]
+                );
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            Log::error('Error updating ward', ['error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => '病棟更新中エラーが発生しました。', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getWardManager($id) {
+        $wardCodes = WardManager::where('user_id', $id)->pluck('ward_code')->toArray();
+        return response()->json(['ward_codes' => $wardCodes]);
     }
 }

@@ -76,3 +76,6 @@ Route::get('/revoke-permission/{id}', [UserController::class, 'revokePermission'
 
 //病棟管理者画面
 Route::post('/ward-update/{id}', [UserController::class, 'updateWard'])->name('ward-update');
+
+Route::get('/ward-manager/{id}', [UserController::class, 'getWardManager']);
+

@@ -65,6 +65,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'approval_date' => 'datetime',
         'last_activity_date' => 'datetime',
+        'ward' => 'array'
     ];
 
     /**
@@ -77,7 +78,11 @@ class User extends Authenticatable
     ];
 
     public function wardManager() {
-        return $this->hasMany(WardManager::class, 'id', 'id');
+        return $this->hasMany(WardManager::class, 'user_id', 'id');
+    }
+
+    public function ward() {
+        return $this->hasMany(Ward::class, 'ward_code', 'id');
     }
 
     public function isOnline()
