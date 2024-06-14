@@ -28,7 +28,7 @@ class UserController extends Controller
             'class' => 'bg-pink-300 text-pink-900 text-sm font-medium mr-2 px-2.5 py-1 rounded-full'
         ],
         '007' => [
-            'name' => 'ユーザー',
+            'name' => '管理者',
             'class' => 'bg-sky-300 text-sky-900 text-sm font-medium mr-2 px-2.5 py-1 rounded-full'
         ],
         '005' => [
@@ -51,13 +51,10 @@ class UserController extends Controller
      * @return \Illuminate\View\View
      */
     public function userIndex() {
-
         $users = User::where('user_type', '!=', '000')
         ->orderBy('id', 'desc')
         ->paginate(ControllerConsts::PAGINATION_COUNT);
-
         $userTypes = $this->userTypes;
-
         return view('smart.user-info', compact('users', 'userTypes'));
     }
 
@@ -72,7 +69,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->user_type = '000';
         $user->save();
-
         return redirect()->back()->with('success', 'ユーザーの権限が削除されました');
     }
 
@@ -90,9 +86,7 @@ class UserController extends Controller
         ->where('user_type', '000')
         ->orderBy('id', 'desc')
         ->paginate(ControllerConsts::PAGINATION_COUNT);
-
         $userTypes = $this->userTypes;
-
         return view('smart.user-approval', compact('users', 'userTypes'));
     }
 
@@ -106,7 +100,6 @@ class UserController extends Controller
      */
     public function userApprovalRegistration(Request $request, $id) {
         $user = User::find($id);
-
         if ($user && $user->user_type === '000') {
             // user_type入力値を検証
             $userType = $request->input('user_type');
@@ -114,13 +107,11 @@ class UserController extends Controller
                 // user_type入力値がない場合, エラーメッセージを返す
                 return response()->json(['error' => 'ユーザータイプがある存在しません。'], 400);
             }
-    
             // 入力値が有効な場合、user_typeを更新
             $user->user_type = $userType;
             $user->approval_date = now();
             $user->approval_user = auth()->id();
             $user->save();
-
             return response()->json(['success' => '承認しました'], 200);
         }
         return response()->json(['error' => '承認できませんでした'], 404);
@@ -150,7 +141,6 @@ class UserController extends Controller
      * @throws \Exception
      */
     public function updateWard(Request $request, $id) {
-
         try {
             Log::info('updateWard called', ['user_id' => $id, 'ward_codes' => $request->input('ward_codes', [])]);
             $wardCodes = $request->input('ward_codes', []);
@@ -166,7 +156,6 @@ class UserController extends Controller
                     'creator_id' => auth()->id()]
                 );
             }
-
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             Log::error('Error updating ward', ['error' => $e->getMessage()]);
@@ -174,8 +163,30 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * 病棟管理者の病棟取得
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getWardManager($id) {
-        $wardCodes = WardManager::where('user_id', $id)->pluck('ward_code')->toArray();
-        return response()->json(['ward_codes' => $wardCodes]);
+
+        $wardCodes = WardManager::where('user_id', $id)
+            ->pluck('ward_code')
+            ->toArray();
+
+        return response()
+            ->json(['ward_codes' => $wardCodes]);
+            
     }
+
+        protected function approvedUser(Request $request, $user)
+    {
+        if ($user->user_type === '000' || $user->user_type === '009') {
+            return redirect('/dashboard');
+        }
+        
+        return redirect()->intended($this->redirectPath());
+    }
+
 }

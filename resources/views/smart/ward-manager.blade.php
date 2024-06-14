@@ -146,12 +146,15 @@
                     updateWardModal.style.display = 'flex';
                 });
             });
+
             closeModalBtn.addEventListener('click', function () {
                 updateWardModal.style.display = 'none';
             });
+
             updateCancelBtn.addEventListener('click', function () {
                 updateWardModal.style.display = 'none';
             });
+
             updateWardForm.addEventListener('submit', function (event) {
                 event.preventDefault();
 
@@ -182,7 +185,8 @@
             });
         });
         
-        document.getElementById('updateWard').addEventListener('change', function() {
+        document.getElementById('updateWard').addEventListener('change', function() 
+        {
             document.getElementById('updateWardBtn').disabled = !this.checked;
         });
 

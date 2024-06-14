@@ -38,7 +38,7 @@ Route::get('/index', [IndexController::class, 'index'])->name('index');
 //患者検索画面
 Route::get('/kanja-list', [CustomerController::class, 'customerIndex'])->name('kanja-list');
 //検索機能
-Route::post('kanja-search', [CustomerController::class, 'customerSearch'])->name('kanja-search');
+Route::get('kanja-search', [CustomerController::class, 'customerSearch'])->name('kanja-search');
 //患者登録画面
 Route::get('/kanja-create', [CustomerController::class, 'customerCreate'])->name('kanja-create');
 //create機能
@@ -64,18 +64,20 @@ Route::delete('/image-delete', [FacilitiesController::class, 'imageDelete'])->na
 //Master一覧画面
 Route::get('/master', [MasterController::class, 'MasterViewIndex']);
 Route::post('/master/values', [MasterController::class, 'getValuesByMasterName']);
-
 //ユーザー一覧画面
 Route::get('/user-info', [UserController::class, 'userIndex'])->name('user-info');
 //ユーザー承認画面
 Route::get('/user-approval', [UserController::class, 'userApproval'])->name('user-approval');
 Route::post('/user-approval-registration/{id}', [UserController::class, 'userApprovalRegistration'])->name('user-approval-registration');
-
 Route::get('/ward-manager', [UserController::class, 'wardManager'])->name('ward-manager');
 Route::get('/revoke-permission/{id}', [UserController::class, 'revokePermission'])->name('revoke-permission');
-
 //病棟管理者画面
 Route::post('/ward-update/{id}', [UserController::class, 'updateWard'])->name('ward-update');
-
 Route::get('/ward-manager/{id}', [UserController::class, 'getWardManager']);
 
+//未承認ユーザー制限
+Route::middleware(['auth', 'approved'])->group(function () {
+    Route::get('/index', [UserController::class, 'ApprovedUser'])->name('approved-user');
+    // 필요한 다른 라우트 추가
+    
+});

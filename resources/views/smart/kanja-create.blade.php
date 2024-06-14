@@ -49,11 +49,11 @@
                         <label class="mb-1 text-sm text-gray-600">性別 <span class="text-red-500">必須</span></label>
                         <div class="flex space-x-4">
                             <label class="inline-flex items-center">
-                                <input type="radio" name="gender" class="form-radio" value="1" {{ $genders == '1' ? 'checked' : '' }}>
+                                <input type="radio" name="gender" class="form-radio" value="1" {{ old('gender') == '1' ? 'checked' : '' }}>
                                 <span class="ml-2">男</span>
                             </label>
                             <label class="inline-flex items-center">
-                                <input type="radio" name="gender" class="form-radio" value="2" {{ $genders == '2' ? 'checked' : '' }}>
+                                <input type="radio" name="gender" class="form-radio" value="2" {{ old('gender') == '2' ? 'checked' : '' }}>
                                 <span class="ml-2">女</span>
                             </label>
                         </div>

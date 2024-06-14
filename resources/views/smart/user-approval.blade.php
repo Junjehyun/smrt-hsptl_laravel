@@ -143,12 +143,7 @@
                 $('#modalBackground').addClass('hidden');
                 $('#approvalModal').hide();
             });
-            //モーダルウィンドウ外部クリック時閉じる
-            // $(window).on('click', function(event) {
-            //     if ($(event.target).is('#approvalModal')) {
-            //         $('#approvalModal').hide();
-            //     }
-            // });
+            //モーダル背景クリックイベント
             $(window).on('click', function(event) {
                 if ($(event.target).is('#modalBackground')) {
                     $('#modalBackground').addClass('hidden'); 
@@ -189,33 +184,34 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
+            
             const modal = document.getElementById('approvalModal');
             const userNameDisplay = document.getElementById('userNameDisplay');
             const userIdInput = document.getElementById('user_id');
             const closeBtn = document.querySelector('.close');
             const openModalBtns = document.querySelectorAll('.approveBtn');
 
-        openModalBtns.forEach(button => {
-            button.addEventListener('click', function () {
-                const userName = this.getAttribute('data-name');
-                const userId = this.getAttribute('data-id');
+            openModalBtns.forEach(button => {
+                button.addEventListener('click', function () {
+                    const userName = this.getAttribute('data-name');
+                    const userId = this.getAttribute('data-id');
 
-                userNameDisplay.innerHTML = `<span class="text-sky-500">${userName}</span>様のユーザー情報を変更します。`;
-                userIdInput.value = userId;
+                    userNameDisplay.innerHTML = `<span class="text-sky-500">${userName}</span>様のユーザー情報を変更します。`;
+                    userIdInput.value = userId;
 
-                modal.style.display = 'flex';
+                    modal.style.display = 'flex';
+                });
+            });
+
+            closeBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
             });
         });
-
-        closeBtn.addEventListener('click', function () {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    });
     </script>
 @endsection

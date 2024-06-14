@@ -2,17 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
+use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
-class UserActivity
+class ApprovedUser
 {
     /**
      * Handle an incoming request.
@@ -23,13 +18,9 @@ class UserActivity
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $expiresAt = Carbon::now()->addMinutes(10); 
-
-            Cache::put('user-is-online-' . $user->id, true, $expiresAt);
-
-            DB::table('users')->where('id', $user->id)->update([
-                'last_activity_date' => Carbon::now(),
-            ]);
+            if ($user->user_type === '000' || $user->user_type === '009') {
+                return redirect('/dashboard');
+            }
         }
 
         return $next($request);

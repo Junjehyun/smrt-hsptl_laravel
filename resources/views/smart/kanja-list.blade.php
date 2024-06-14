@@ -15,10 +15,9 @@ use App\Consts\ModelConsts;
         <div class="bg-white p-6 rounded-lg shadow space-y-3 w-full">
             <div class="flex flex-wrap justify-between items-center gap-4">
                 <div class="overflow-x-auto mt-6 mx-5">
-                    <form action="{{ route('kanja-search') }}" method="POST">
-                        @csrf
+                    <form action="{{ route('kanja-search') }}" method="GET">
                         <div class="flex items-center mb-5 space-x-3">
-                            <input name="kanja-search" class="rounded placeholder-gray-300 h-10 p-2" type="text" placeholder="氏名または患者番号を検索">
+                            <input name="kanja-search" class="rounded placeholder-gray-300 h-10 p-2" type="text" placeholder="氏名または患者番号を検索" value="{{ request('kanja-search') }}">
                             <button type="submit" class="bg-sky-400 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline h-10">検索</button>
                             <div class="flex-grow text-right">
                                 <a href="/kanja-create">

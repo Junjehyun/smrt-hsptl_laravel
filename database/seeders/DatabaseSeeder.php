@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             Medical_commentSeeder::class,
             WardManagerSeeder::class,
             WardSeeder::class,
-            
         ]);
     }
 }
