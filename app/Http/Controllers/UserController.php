@@ -8,7 +8,9 @@ use App\Models\WardManager;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Closure;
 
 class UserController extends Controller
 {
@@ -180,13 +182,16 @@ class UserController extends Controller
             
     }
 
-        protected function approvedUser(Request $request, $user)
-    {
-        if ($user->user_type === '000' || $user->user_type === '009') {
-            return redirect('/dashboard');
-        }
-        
-        return redirect()->intended($this->redirectPath());
-    }
+    /**
+     * 未承認ユーザー制限
+     * 
+     * @return \Illuminate\View\View
+     */
+    // public function approvedUser()
+    // {
+    
+    //     return view('smart.index');
+
+    // }
 
 }

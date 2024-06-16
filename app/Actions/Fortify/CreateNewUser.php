@@ -43,15 +43,13 @@ class CreateNewUser implements CreatesNewUsers
             'last_activity_date' => Carbon::createFromTimestamp(now()->getTimestamp())->format('Y-m-d H:i:s'),
         ]);
 
-        $creatorId = Auth::id() ?? 0;
+        //$creatorId = Auth::id() ?? 0;
         
         foreach ($validated['ward'] as $wardCode) {
             WardManager::create([
                 'user_id' => $user->id,
                 'ward_code' => $wardCode,
-                'creator_id' => $creatorId,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'creator_id' => $user->id,
             ]);
         }
         return $user;

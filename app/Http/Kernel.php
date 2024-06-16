@@ -37,12 +37,14 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\UserActivity::class,
+            //\App\Http\Middleware\ApprovedUser::class,
         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            
         ],
 
         // 'route' => [
@@ -72,7 +74,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-
         'approved' => \App\Http\Middleware\ApprovedUser::class,
     ];
 }
