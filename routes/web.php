@@ -6,6 +6,8 @@ use App\Http\Controllers\IndexController;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\QrTagController;
+
 
 
 /*
@@ -75,4 +77,6 @@ Route::middleware(['auth', 'approved'])->group(function () {
     //病棟管理者画面
     Route::post('/ward-update/{id}', [UserController::class, 'updateWard'])->name('ward-update');
     Route::get('/ward-manager/{id}', [UserController::class, 'getWardManager']);
+    //QRタグ画面
+    Route::get('/qr-tag', [QrTagController::class, 'QrPageIndex'])->name('qr-tag');
 });
