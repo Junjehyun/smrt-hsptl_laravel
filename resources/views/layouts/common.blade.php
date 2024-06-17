@@ -60,7 +60,7 @@
                 <hr class="mb-4 border-sky-200">
                 <li class="mb-4 text-xl">
                     <a href="/qr-tag" class="block font-bold text-red-500 hover:text-red-800 transition duration-200">
-                        タグの情報及びステータス
+                        スマートタグ一登録
                     </a>
                 </li>
                 <hr class="mb-4 border-sky-200">
