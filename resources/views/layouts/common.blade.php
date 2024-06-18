@@ -59,7 +59,7 @@
                 </li>
                 <hr class="mb-4 border-sky-200">
                 <li class="mb-4 text-xl">
-                    <a href="/qr-tag" class="block font-bold text-red-500 hover:text-red-800 transition duration-200">
+                    <a href="/qr-tag" class="block font-bold text-gray-500 hover:text-gray-800 transition duration-200">
                         スマートタグ一登録
                     </a>
                 </li>

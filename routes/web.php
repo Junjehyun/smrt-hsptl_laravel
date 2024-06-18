@@ -79,4 +79,5 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/ward-manager/{id}', [UserController::class, 'getWardManager']);
     //QRタグ画面
     Route::get('/qr-tag', [QrTagController::class, 'QrPageIndex'])->name('qr-tag');
+    Route::post('/save-qr-code', [QrTagController::class, 'saveQrCode'])->name('save-qr-code');
 });

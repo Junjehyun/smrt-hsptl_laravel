@@ -182,16 +182,4 @@ class UserController extends Controller
             
     }
 
-    /**
-     * 未承認ユーザー制限
-     * 
-     * @return \Illuminate\View\View
-     */
-    // public function approvedUser()
-    // {
-    
-    //     return view('smart.index');
-
-    // }
-
 }
